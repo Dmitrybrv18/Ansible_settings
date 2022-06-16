@@ -1,11 +1,75 @@
 
+10.50.1.1
+10.51.1.2
+
+[staging_DB]
+192.168.1.1
+192.168.1.2
+
+[staging_WEB]
+192.168.2.1
+192.168.2.2
+
+[staging_APP]
+192.168.3.1
+192.168.3.2
+
+[staging_ALL:children]
+staging_DB
+staging_WEB
+staging_APP
+
+[prod_DB]
+10.10.1.1
+
+[prod_WEB]
+10.10.2.2
+
+[prod_APP]
+10.10.3.3
+
+[prod_ALL:children]
+prod_DB
+prod_WEB
+prod_APP
+
+
+[DB_ALL:children]
+staging_DB
+prod_DB
+
+[APP_ALL:children]
+staging_APP
+prod_APP
+
+[RAZNOE:children]
+APP_ALL
+DB_ALL
+
+[RAZNOE:vars]
+message=Hello
+
+
 [staging_servers]
-linuxX  ansible_host=35.172.128.49 ansible_user=ec2-user  ansible_ssh_private_key_file=/home/dmytro/.ssh/dmitrybrv2.pem
+linuxX  ansible_host=18.212.182.18 ansible_user=ec2-user  ansible_ssh_private_key_file=/home/dmytro/.ssh/dmitrybrv2.pem
 
 
 [prod_servers]
-linux1  ansible_host=35.174.156.183 ansible_user=ec2-user  ansible_ssh_private_key_file=/home/dmytro/.ssh/dmitrybrv2.pem
-linux2  ansible_host=44.202.114.18  ansible_user=ec2-user  ansible_ssh_private_key_file=/home/dmytro/.ssh/my_4_server_key.pem
+linux1  ansible_host=52.207.242.214  ansible_user=ec2-user  ansible_ssh_private_key_file=/home/dmytro/.ssh/dmitrybrv2.pem
+linux2  ansible_host=44.202.109.232
 
+[prod_servers:vars]
+ansible_user=ec2-user
+ansible_ssh_private_key_file=/home/dmytro/.ssh/my_4_server_key.pem
 
+[windows_servers]
+Windows_Server_2019  ansible_host=35.171.25.102
+
+[windows_servers:vars]
+ansible_user = myadmin
+ansible_password = 123123
+ansible_port = 5986
+ansible_connection = winrm
+ansible_winrm_server_cert_validation = ignore
+  
 
